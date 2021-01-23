@@ -4,4 +4,6 @@
 
 English version of Deep learning tutorials using Pytorch (maintained by [PseudoLab](https://pseudo-lab.com/))
 
-Will be launched as a website around March 2021. 
+Currently being translated using [Gitlocalize](https://gitlocalize.com/repo/5678)
+
+Will be launched as a website around March 2021
