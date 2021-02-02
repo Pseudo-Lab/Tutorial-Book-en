@@ -1,6 +1,6 @@
 # Deep Learning Tutorials using PyTorch (PseudoLab)
 
-[![gitlocalized ](https://gitlocalize.com/repo/5678/en/badge.svg)](https://gitlocalize.com/repo/5678/en?utm_source=badge)
+[![gitlocalized ](https://gitlocalize.com/repo/5678/en/badge.svg)](https://gitlocalize.com/repo/5678/)
 
 English version of [Deep learning tutorials using Pytorch](https://pseudo-lab.github.io/Tutorial-Book/) (maintained by [PseudoLab](https://pseudo-lab.com/))
 
