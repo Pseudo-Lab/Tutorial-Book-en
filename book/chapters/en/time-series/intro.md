@@ -4,7 +4,7 @@ Welcome to the tutorial for building a model for predicting the number of COVID-
 
 In this educational tutorial, we will practice building an LSTM model using PyTorch. This tutorial is not intended to serve as an official estimation of future COVID-19 cases.
 
-이번 튜토리얼의 개요는 다음과 같습니다.
+The outline of this tutorial is as follows:
 
 **Dataset **:
 
@@ -15,13 +15,13 @@ In this educational tutorial, we will practice building an LSTM model using PyTo
 
 **Model Structure** : LSTM, CNN-LSTM
 
-**목차**:
+**Table of Contents** :
 
 - Introduction to Time Series
-- 데이터 탐색
-- 데이터 전처리
+- Exploratory Data Analysis
+- Data Preprocessing
 - LSTM
 - CNN-LSTM
-- 참고 문헌
+- References
 
 Pseudo Lab values the sharing of knowledge. Any feedback is always welcome; you can leave comments on each page.
