@@ -1,6 +1,37 @@
-- file: intro
-  sections:
-    - file: docs/markdown-example
-      title: markdown 예시
-    - file: docs/notebook-example
-      title: .ipynb 파일 예시
+# - file: README
+
+- file: index
+    
+# - part: 객체 탐지(Object Detection)
+  # chapters:
+  # - file: chapters/object-detection/intro
+    # title: 의료용 마스크 탐지 모델 구축
+  # sections:
+  # - file: chapters/object-detection/Ch1-Object-Detection
+  # - file: chapters/object-detection/Ch2-EDA
+  # - file: chapters/object-detection/Ch3-preprocessing
+  # - file: chapters/object-detection/Ch4-RetinaNet
+  # - file: chapters/object-detection/Ch5-Faster-R-CNN
+  # - file: chapters/object-detection/References
+    
+- part: Time Series
+  chapters:
+  - file: chapters/en/time-series/intro
+    title: Predicting Confirmed Cases of Covid-19
+  #  sections:
+  - file: chapters/en/time-series/Ch1-Time-Series
+  - file: chapters/en/time-series/Ch2-EDA
+  - file: chapters/en/time-series/Ch3-preprocessing
+  - file: chapters/en/time-series/Ch4-LSTM
+  - file: chapters/en/time-series/Ch5-CNN-LSTM
+  - file: chapters/en/time-series/References
+        
+# - part: 생성 모델링(Generative Modeling)
+  # chapters:
+  # - file: chapters/GAN/intro
+    # title: 컬러 이미지 생성 모델 구축
+  # sections:
+  # - file: chapters/GAN/Ch1-Introduction
+  # - file: chapters/GAN/Ch2-EDA
+  # - file: chapters/GAN/Ch3-GAN
+  # - file: chapters/GAN/Ch4-pix2pix

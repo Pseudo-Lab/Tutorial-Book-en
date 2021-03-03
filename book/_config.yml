@@ -1,17 +1,18 @@
 #######################################################################################
 # Book settings
 title : PseudoLab Tutorial Book
-author: PseudoLab
+author: PseudoLab Tutorial Team
 logo: 'PseudoLab_logo.png'
 
-# Short description about the book
+# Information about where the book exists on the web
 description: >-
-  Basic Jupyter Book template for PseudoLab studies
+  A tutorial book on applying deep learning to solve daily life problems.
 
 #######################################################################################
 # Execution settings
 execute:
-  execute_notebooks           : off
+  execute_notebooks           : off #cache for default setting
+  allow_errors                : true
 
 #######################################################################################
 # HTML-specific settings
@@ -25,8 +26,12 @@ notebook_interface            : "notebook"
 #######################################################################################
 # Launch button settings
 repository:
-  url                         : https://github.com/pseudo-lab/Jupyter-Book-Template
+  url                         : https://github.com/Pseudo-Lab/Tutorial-Book-en
   path_to_book                : "book"
+
+binder:
+  binderhub_url               : "https://mybinder.org"
+  text                        : "Launch binder"
 
 latex:
   latex_engine                : "xelatex"
@@ -35,13 +40,11 @@ latex:
     
 html:
   favicon: 'PseudoLab_logo.png'
+  # google_analytics_id: 
   use_issues_button: true
   use_repository_button: true
-  
-sphinx:
-  config:
-    html_js_files:
-    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+  comments:
+    utterances:
+      repo: "Pseudo-Lab/Tutorial-Book-en"
     
 only_build_toc_files: true
-    
