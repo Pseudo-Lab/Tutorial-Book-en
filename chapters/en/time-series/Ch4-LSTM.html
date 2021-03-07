@@ -323,19 +323,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="lstm">
 <h1>4. LSTM<a class="headerlink" href="#lstm" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/time-series/Ch4-LSTM.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html">
-<iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/X6U4eBzOiNM"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
-</div>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book-en/blob/master/book/chapters/en/time-series/Ch4-LSTM.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>In the previous chapter, we transformed time series data shared by Johns Hopkins University into supervised learning data. In this chapter, we will build a model to predict daily COVID-19 cases in South Korea using LSTM (Long Short-Term Memory).</p>
 <p>In chapter 4.1 and 4.2, we will divide the dataset into training, test, and validation sets after loading the cumulative COVID-19 cases for South Korea. In chapter 4.3, we will define the LSTM model, and then in chapter 4.4, we will train the model. Lastly, we will examine the predicted COVID-19 cases.</p>
 <p>Firstly, import the basic modules we will need to use.</p>
@@ -630,7 +618,7 @@ Epoch 90 train loss: 0.032349443449406844 val loss: 0.03221791982650757
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f76de333fd0&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/Ch4-LSTM_20_1.png" src="../../../_images/Ch4-LSTM_20_1.png" />
+<img alt="../../../_images/Ch4-LSTM_19_1.png" src="../../../_images/Ch4-LSTM_19_1.png" />
 </div>
 </div>
 </div>
@@ -677,7 +665,7 @@ Epoch 90 train loss: 0.032349443449406844 val loss: 0.03221791982650757
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f76dc9ac748&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/Ch4-LSTM_29_1.png" src="../../../_images/Ch4-LSTM_29_1.png" />
+<img alt="../../../_images/Ch4-LSTM_28_1.png" src="../../../_images/Ch4-LSTM_28_1.png" />
 </div>
 </div>
 <p>The blue line shows the true values, and the orange line reveals the predicted values. Although the model predicts the rising trend of new COVID-19 cases, it does not predict the sharp rise in cases towards the middle of December.</p>
@@ -739,7 +727,7 @@ Epoch 90 train loss: 0.032349443449406844 val loss: 0.03221791982650757
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f76dc271278&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/Ch4-LSTM_38_1.png" src="../../../_images/Ch4-LSTM_38_1.png" />
+<img alt="../../../_images/Ch4-LSTM_37_1.png" src="../../../_images/Ch4-LSTM_37_1.png" />
 </div>
 </div>
 <p>In this chapter, we practiced building an LSTM model, using COVID-19 cases. In the next chapter, we will learn how to apply CNN-LSTM model to times series data.</p>

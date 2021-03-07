@@ -6,7 +6,7 @@ In this educational tutorial, we will practice building an LSTM model using PyTo
 
 The outline of this tutorial is as follows:
 
-**Dataset **:
+**Dataset**:
 
 1. JHU CSSE COVID-19 Data (Source: [Github](https://github.com/CSSEGISandData/COVID-19))
 2. Novel Corona Virus 2019 Dataset (Source: [Kaggle](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset?select=covid_19_data.csv))

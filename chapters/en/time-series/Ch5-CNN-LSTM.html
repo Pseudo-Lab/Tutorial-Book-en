@@ -323,19 +323,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="cnn-lstm">
 <h1>5. CNN-LSTM<a class="headerlink" href="#cnn-lstm" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/time-series/Ch5-CNN-LSTM.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html">
-<iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/il6UhdKycew"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
-</div>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book-en/blob/master/book/chapters/en/time-series/Ch5-CNN-LSTM.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>In the previous chapter, we predicted COVID-19 cases in South Korea by using the LSTM model. LSTM was first introduced by <a class="reference external" href="http://www.bioinf.jku.at/publications/older/2604.pdf">Hochreiter &amp; Schmidhuber (1997)</a>, and has been developed continuously since.</p>
 <p>In this chapter, we will experiment with a different method in order to enhance model performance. There are several ways to enhance model performance, such as changing batch size and number of epochs, dataset curating, adjusting the ratio of the training, validation, and test datasets, changing loss functions and model architectures, and so on. In this chapter, we will improve model performance by changing the model architecture. More specifically, we will see if the CNN-LSTM model can predict COVID-19 cases in South Korea better than the LSTM model.</p>
 <p>Firstly, we will load the libraries we will need for this chapter. We will use the basic libraries <code class="docutils literal notranslate"><span class="pre">torch</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, and <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, along with <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> which shows progress status, and <code class="docutils literal notranslate"><span class="pre">pylab</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, which are visualization libraries.</p>
@@ -465,7 +453,7 @@ COVIDTimeSeries.zip is done!
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f77cc4d1438&gt;]
 </pre></div>
 </div>
-<img alt="../../../_images/Ch5-CNN-LSTM_10_1.png" src="../../../_images/Ch5-CNN-LSTM_10_1.png" />
+<img alt="../../../_images/Ch5-CNN-LSTM_9_1.png" src="../../../_images/Ch5-CNN-LSTM_9_1.png" />
 </div>
 </div>
 </div>
@@ -486,7 +474,7 @@ COVIDTimeSeries.zip is done!
 <h3>5.2.2 Test with 1D CNN<a class="headerlink" href="#test-with-1d-cnn" title="Permalink to this headline">¶</a></h3>
 <p><img alt="그림 5-2" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/TS-ch5img02.png?raw=true" /> <img alt="그림 5-3" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/TS-ch5img03.png?raw=true" /></p>
 <ul class="simple">
-<li><p>그림 5-2 &amp; 5-3 1D CNN Visualization</p></li>
+<li><p>Figures 5-2 &amp; 5-3 1D CNN Visualization</p></li>
 </ul>
 <p>Figures 5-2 and 5-3 are the visualizations of 1D CNN architectures. Between Figure 5-2 and Figure 5-3, you can see the kernel moves one step when <code class="docutils literal notranslate"><span class="pre">stride</span></code> is 1. Now we will examine a 1D CNN through simple code.</p>
 <p>Firstly, define and save a 1D CNN layer in <code class="docutils literal notranslate"><span class="pre">c</span></code>. Like in Figures 5-2 and 5-3, we will set <code class="docutils literal notranslate"><span class="pre">in_channels</span></code>=1, <code class="docutils literal notranslate"><span class="pre">out_channels</span></code>=1, <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code>=2, and <code class="docutils literal notranslate"><span class="pre">stride</span></code>=1. After that, define the <code class="docutils literal notranslate"><span class="pre">input</span></code> variables, then apply them into <code class="docutils literal notranslate"><span class="pre">c</span></code> to calculate the predicted values.</p>
@@ -761,7 +749,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f77c2ac9fd0&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/Ch5-CNN-LSTM_37_1.png" src="../../../_images/Ch5-CNN-LSTM_37_1.png" />
+<img alt="../../../_images/Ch5-CNN-LSTM_36_1.png" src="../../../_images/Ch5-CNN-LSTM_36_1.png" />
 </div>
 </div>
 <p>We can see that both loss values are converging.</p>
@@ -796,7 +784,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f77c29aafd0&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/Ch5-CNN-LSTM_41_1.png" src="../../../_images/Ch5-CNN-LSTM_41_1.png" />
+<img alt="../../../_images/Ch5-CNN-LSTM_40_1.png" src="../../../_images/Ch5-CNN-LSTM_40_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
