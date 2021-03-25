@@ -6,9 +6,9 @@ The outline of this tutorial is as follows:
 
 **Dataset** : Face Mask Detection (Source: [Kaggle](https://www.kaggle.com/andrewmvd/face-mask-detection) )
 
-**실습 환경**: Google Colaboratory
+**Lab Environment** : Google Colaboratory
 
-**모델 구조**: RetinaNet, Faster R-CNN
+**Model Structure** : RetinaNet, Faster R-CNN
 
 **Table of Contents** :
 
