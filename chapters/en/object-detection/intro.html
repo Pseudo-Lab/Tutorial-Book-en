@@ -5,44 +5,44 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deep Learning Tutorials with PyTorch &#8212; PseudoLab Tutorial Book</title>
+    <title>Building Face Mask Detection Model &#8212; PseudoLab Tutorial Book</title>
     
-  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
     
   <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     
       
   <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
   <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
     <script kind="utterances">
 
     var commentsRunWhenDOMLoaded = cb => {
@@ -78,7 +78,7 @@ var addUtterances = () => {
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
@@ -87,11 +87,12 @@ commentsRunWhenDOMLoaded(addUtterances);
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="shortcut icon" href="_static/PseudoLab_logo.png"/>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Building Face Mask Detection Model" href="chapters/en/object-detection/intro.html" />
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="1. Introduction to Object Detection" href="Ch1-Object-Detection.html" />
+    <link rel="prev" title="Deep Learning Tutorials with PyTorch" href="../../../index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -108,22 +109,22 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="#">
+<a class="navbar-brand text-wrap" href="../../../index.html">
   
-  <img src="_static/PseudoLab_logo.png" class="logo" alt="logo">
+  <img src="../../../_static/PseudoLab_logo.png" class="logo" alt="logo">
   
   
   <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
   
 </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../index.html">
    Deep Learning Tutorials with PyTorch
   </a>
  </li>
@@ -133,39 +134,39 @@ commentsRunWhenDOMLoaded(addUtterances);
   Object Detection
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/intro.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Detecting Medical Masks
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/Ch1-Object-Detection.html">
+  <a class="reference internal" href="Ch1-Object-Detection.html">
    1. Introduction to Object Detection
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/Ch2-EDA.html">
+  <a class="reference internal" href="Ch2-EDA.html">
    2. EDA
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/Ch3-preprocessing.html">
+  <a class="reference internal" href="Ch3-preprocessing.html">
    3. Data Preprocessing
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/Ch4-RetinaNet.html">
+  <a class="reference internal" href="Ch4-RetinaNet.html">
    4. RetinaNet
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/Ch5-Faster-R-CNN.html">
+  <a class="reference internal" href="Ch5-Faster-R-CNN.html">
    5. Faster R-CNN
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/object-detection/References.html">
+  <a class="reference internal" href="References.html">
    6. References
   </a>
  </li>
@@ -177,37 +178,37 @@ commentsRunWhenDOMLoaded(addUtterances);
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/intro.html">
+  <a class="reference internal" href="../time-series/intro.html">
    Predicting Confirmed Cases of Covid-19
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/Ch1-Time-Series.html">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
    1. Introduction to Time Series
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/Ch2-EDA.html">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
    2. EDA
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/Ch3-preprocessing.html">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
    3. Data Pre-Processing
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/Ch4-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
    4. LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/Ch5-CNN-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
    5. CNN-LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/en/time-series/References.html">
+  <a class="reference internal" href="../time-series/References.html">
    6. References
   </a>
  </li>
@@ -251,7 +252,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/index.md"><button type="button"
+        <a class="dropdown-buttons" href="../../../_sources/chapters/en/object-detection/intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -271,7 +272,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book-en/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book-en/issues/new?title=Issue%20on%20page%20%2Fchapters/en/object-detection/intro.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -299,54 +300,23 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="deep-learning-tutorials-with-pytorch">
-<h1>Deep Learning Tutorials with PyTorch<a class="headerlink" href="#deep-learning-tutorials-with-pytorch" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to Deep Learning Tutorials with PyTorch! <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="License: CC BY-NC-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" align='right'></a> <a href="https://pseudo-lab.github.io/Tutorial-Book/"><img alt="Korean" src="https://img.shields.io/badge/Translate%20To%20Korean-blue" align='right' style="padding-right: 5px;"></a></p>
-<p>This repository is built by Tutorial Team at <a class="reference external" href="https://pseudo-lab.com/">Pseudo Lab</a>, it stores various tutorials on building deep learning models using PyTorch.</p>
-<p>Pseudo Lab is a community of data scientists and data science students in Korea centered on machine learning research. We aim to create a community which influence the value of sharing.</p>
-<p>We are planning on achieving our mission by holding <strong>meet-ups</strong>, organizing <strong>study-groups</strong>, sharing <strong>source code</strong>, posting <strong>Youtube videos</strong>, and hosting <strong>hackathons</strong> related to <strong>ML/DL/Kaggle</strong>.</p>
-<hr class="docutils" />
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Tasks</p></th>
-<th class="head"><p>Content</p></th>
-<th class="text-align:left head"><p>Authors / Translators</p></th>
-<th class="head"><p>Date</p></th>
-<th class="head"><p>Translation Editors</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Object Detection <br /></p></td>
-<td><p><a class="reference external" href="https://pseudo-lab.github.io/Tutorial-Book-en/chapters/en/object-detection/intro.html">Detecting Medical Masks</a></p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">Sungjin Ahn</a>, <a class="reference external" href="https://github.com/mmminji">Minji Kang</a>, <a class="reference external" href="https://github.com/elibooklover">Hoyeol Kim</a>, <a class="reference external" href="https://github.com/oopsys6">Junhyung Park</a></p></td>
-<td><p>2020.10</p></td>
-<td><p>Hoyeol Kim, Lindsey Kim</p></td>
-</tr>
-<tr class="row-odd"><td><p>Time Series <br /></p></td>
-<td><p><a class="reference external" href="https://pseudo-lab.github.io/Tutorial-Book-en/chapters/en/time-series/intro.html">Predicting Confirmed Cases of Covid-19</a></p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">Sungjin Ahn</a>, <a class="reference external" href="https://github.com/mmminji">Minji Kang</a>, <a class="reference external" href="https://github.com/elibooklover">Hoyeol Kim</a>, <a class="reference external" href="https://github.com/oopsys6">Junhyung Park</a></p></td>
-<td><p>2020.12</p></td>
-<td><p>Hoyeol Kim, Lindsey Kim</p></td>
-</tr>
-<tr class="row-even"><td><p>Generative Modeling <br /></p></td>
-<td><p>Generating color images from gray images</p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">Sungjin Ahn</a>, <a class="reference external" href="https://github.com/mmminji">Minji Kang</a>, <a class="reference external" href="https://www.linkedin.com/in/da-devangelist/">Donghwan Kim</a>, <a class="reference external" href="https://github.com/elibooklover">Hoyeol Kim</a></p></td>
-<td><p>2021.02</p></td>
-<td><p>Hoyeol Kim, Lindsey Kim</p></td>
-</tr>
-</tbody>
-</table>
-<p>*Authors are shown in alphabetical order based on last(family) names</p>
-<hr class="docutils" />
-<p><strong>Pseudo Lab</strong></p>
+  <div class="section" id="building-face-mask-detection-model">
+<h1>Building Face Mask Detection Model<a class="headerlink" href="#building-face-mask-detection-model" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the tutorial on building a medical mask detection model.</p>
+<p>The outline of this tutorial is as follows:</p>
+<p><strong>Dataset</strong> : Face Mask Detection (Source: <a class="reference external" href="https://www.kaggle.com/andrewmvd/face-mask-detection">Kaggle</a> )</p>
+<p><strong>Lab Environment</strong> : Google Colaboratory</p>
+<p><strong>Model Structure</strong> : RetinaNet, Faster R-CNN</p>
+<p><strong>Table of Contents</strong> :</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://pseudo-lab.com/">Website</a>, <a class="reference external" href="https://github.com/Pseudo-Lab">Github</a>, <a class="reference external" href="https://www.facebook.com/groups/pseudolab/">Facebook</a>, <a class="reference external" href="https://www.linkedin.com/company/pseudolab/">Linkedin</a></p></li>
-<li><p>Inquries: <a class="reference external" href="mailto:pseudolab&#46;operator&#37;&#52;&#48;gmail&#46;com">pseudolab<span>&#46;</span>operator<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+<li><p>Introduction to Object Detection</p></li>
+<li><p>Exploratory Data Analysis</p></li>
+<li><p>Data Preprocessing</p></li>
+<li><p>RetinaNet</p></li>
+<li><p>Faster R-CNN</p></li>
+<li><p>References</p></li>
 </ul>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+<p>Pseudo Lab believes in the value of sharing. Feedback is always welcome and you can leave comments on each page.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -362,7 +332,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./."
+            path: "./chapters\en\object-detection"
         },
         predefinedOutput: true
     }
@@ -377,7 +347,8 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='right-next' id="next-link" href="chapters/en/object-detection/intro.html" title="next page">Building Face Mask Detection Model</a>
+    <a class='left-prev' id="prev-link" href="../../../index.html" title="previous page">Deep Learning Tutorials with PyTorch</a>
+    <a class='right-next' id="next-link" href="Ch1-Object-Detection.html" title="next page">1. Introduction to Object Detection</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
@@ -397,7 +368,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     </div>
 
     
-  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
 
 
     

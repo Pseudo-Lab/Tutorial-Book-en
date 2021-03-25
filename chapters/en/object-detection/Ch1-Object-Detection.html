@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Introduction to Object Detection &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Pseudo-Lab/Tutorial-Book-en");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="2. EDA" href="Ch2-EDA.html" />
+    <link rel="prev" title="Building Face Mask Detection Model" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../index.html">
+   Deep Learning Tutorials with PyTorch
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Object Detection
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Detecting Medical Masks
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   1. Introduction to Object Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch2-EDA.html">
+   2. EDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch3-preprocessing.html">
+   3. Data Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch4-RetinaNet.html">
+   4. RetinaNet
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch5-Faster-R-CNN.html">
+   5. Faster R-CNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   6. References
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Time Series
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
+   Predicting Confirmed Cases of Covid-19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
+   1. Introduction to Time Series
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
+   2. EDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
+   3. Data Pre-Processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
+   5. CNN-LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/References.html">
+   6. References
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/chapters/en/object-detection/Ch1-Object-Detection.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book-en"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book-en/issues/new?title=Issue%20on%20page%20%2Fchapters/en/object-detection/Ch1-Object-Detection.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book-en/master?urlpath=tree/book/chapters/en/object-detection/Ch1-Object-Detection.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bounding-box">
+   1.1. Bounding Box
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-type">
+   1.2. Model Type
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#one-stage-detector">
+     1.2.1. One-Stage Detector
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#two-stage-detector">
+     1.2.2. Two-Stage Detector
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-structure">
+   1.3. Model Structure
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#r-cnn">
+     1.3.1. R-CNN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fast-r-cnn">
+     1.3.2. Fast R-CNN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#faster-r-cnn">
+     1.3.3. Faster R-CNN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#yolo">
+     1.3.4. YOLO
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ssd">
+     1.3.5. SSD
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#retinanet">
+     1.3.6. RetinaNet
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="introduction-to-object-detection">
+<h1>1. Introduction to Object Detection<a class="headerlink" href="#introduction-to-object-detection" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book-en/blob/master/book/chapters/en/object-detection/Ch1-Object-Detection.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>Object Detection is a field of computer vision technology in which objects of interest within a given image are detected.</p>
+<p>If an artificial intelligence model determines that the image on the left in Figure 1-1 is of a dog, the model is an image classification model. However, if the artificial intelligence model classifies the object as a dog while also detecting the location of the object, as shown in the picture on the right, the model is an object detection model.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img01.JPG?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-1 Comparison of image classification model and object detection model (Source: <a class="reference external" href="https://www.pexels.com/search/dog/">https://www.pexels.com/search/dog/</a>)</p></li>
+</ul>
+<p>The object detection model can be used in many fields. The most representative case is in an autonomous vehicle. In order to create an autonomous vehicle, computers must be able to recognize surrounding objects by themselves. For instance, the computer should recognize traffic signals; when there is a red light, the vehicle should know to stop.</p>
+<p>Object detection technology is also used for efficient resource management in the field of security. In general, CCTVs record continuously, so a huge amount of memory is required. However, in combination with object detection technology, memory can be used efficiently by starting a recording only when a specific object is detected.</p>
+<p>In this chapter, we will build an object detection model that detects masks. The model we built detects the position of the face in a given image and checks if the face is masked.</p>
+<div class="section" id="bounding-box">
+<h2>1.1. Bounding Box<a class="headerlink" href="#bounding-box" title="Permalink to this headline">¶</a></h2>
+<p>Before creating an object detection model, the first step is to create a bounding box. Since the amount of data used in the object detection model is vast, the object can be correctly detected through a bounding box. In the deep learning process, only the bounding box area is targeted, so we can train efficiently.</p>
+<p>The bounding box is a method that helps us train a model efficiently by detecting specific objects. In the object detection model, bounding boxes are used to specify the target location. The target position is expressed as a rectangle using the X and Y axes. The bounding box value is expressed as (X min, Y min, X max, Y max).</p>
+<p><img alt="" src="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection/raw/master/img/bc1.PNG" /></p>
+<ul class="simple">
+<li><p>Figure 1-2 Bounding box area specified as pixel value (Source: <a class="reference external" href="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection">https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection</a>)</p></li>
+</ul>
+<p>As shown in Figure 1-2, the area between the minimum and maximum X and Y values is set as the bounding box area. However, the X and Y values in Figure 1-2 are pixel values and should be converted into a value between 0 and 1 for efficient calculation.</p>
+<p><img alt="" src="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection/raw/master/img/bc2.PNG" /></p>
+<ul class="simple">
+<li><p>Figure 1-3 Bounding box area specified in percentiles (Source: <a class="reference external" href="https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection/raw/master/img/bc2.PNG">https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection/raw/master/img/bc2.PNG</a>)</p></li>
+</ul>
+<p>The X and Y values in Figure 1-3 are calculated by dividing the original pixel X- and Y-values of the bounding box by the maximum pixel X-value of 971 and the maximum pixel Y-value of 547, respectively. For example, the bounding box minimum X-value of 640 is divided by 971 to get 0.66. This normalization can be seen as a process for efficient computation, but it is not essential.</p>
+<p>Depending on the dataset, the bounding box value may be included as metadata. If there is no metadata, the bounding box can be specified through separate code implementation. The <a class="reference external" href="https://www.kaggle.com/andrewmvd/face-mask-detection">Face Mask Detection</a> dataset used in this tutorial provides bounding boxes. We will diagram the bounding box in chapter 2.</p>
+</div>
+<div class="section" id="model-type">
+<h2>1.2. Model Type<a class="headerlink" href="#model-type" title="Permalink to this headline">¶</a></h2>
+<p>The object detection model can be largely divided into one-stage and two-stage models. Let’s take a look at each model type.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img04.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-4 Object detection algorithm timeline (Source: Zou et al. 2019. Object Detection in 20 Years: A Survey)</p></li>
+</ul>
+<p>Figure 1-4 shows the genealogy of the object detection model. Object detection models based on deep learning appeared in 2012 and can be divided into one-stage detectors and two-stage detectors. To understand the two types of flows, we need to understand the concepts of classification and region proposal. Classification is to classify an object, and region proposal is an algorithm that finds an area where an object is likely to be.</p>
+<p>Two-stage detectors perform well in terms of object detection accuracy, but are limited to real-time detection due to their slow prediction speed. To solve this speed problem, one-stage detectors, which simultaneously perform classification and region proposition, have been created. In the next section, we will examine the structure of one-stage and two-stage detectors.</p>
+<div class="section" id="one-stage-detector">
+<h3>1.2.1. One-Stage Detector<a class="headerlink" href="#one-stage-detector" title="Permalink to this headline">¶</a></h3>
+<p>One-stage detection is a method of obtaining results by performing classification and regional proposal simultaneously. After inputting the image into the model, image features are extracted using the Conv Layer as shown in Figure 1-5.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img05.png?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-5 One-Stage Detector Structure (Source: <a class="reference external" href="https://jdselectron.tistory.com/101">https://jdselectron.tistory.com/101</a>)</p></li>
+</ul>
+</div>
+<div class="section" id="two-stage-detector">
+<h3>1.2.2. Two-Stage Detector<a class="headerlink" href="#two-stage-detector" title="Permalink to this headline">¶</a></h3>
+<p>Two-stage detection is a method of obtaining results by sequentially performing classification and regional proposal. As shown in Figure 1-6, we can see that region proposal and classification are executed sequentially.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img06.png?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-6 Two-Stage Detector structure (source: <a class="reference external" href="https://jdselectron.tistory.com/101">https://jdselectron.tistory.com/101</a>)</p></li>
+</ul>
+<p>As a result, one-stage detection is relatively fast but has low accuracy, and two-stage detection is relatively slow but has higher accuracy.</p>
+</div>
+</div>
+<div class="section" id="model-structure">
+<h2>1.3. Model Structure<a class="headerlink" href="#model-structure" title="Permalink to this headline">¶</a></h2>
+<p>There are several structures for each one-stage and two-stage  detector. R-CNN, Fast R-CNN, and Faster R-CNN are two-stage detectors, while YOLO, SSD, and RetinaNet are one-stage detectors. Let’s look at the characteristics of each model structure.</p>
+<div class="section" id="r-cnn">
+<h3>1.3.1. R-CNN<a class="headerlink" href="#r-cnn" title="Permalink to this headline">¶</a></h3>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img08.png?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-8 R-CNN structure (Source: Girshick et al. 2014. Rich feature gierarchies for accurate object detection and semantic segmentation)</p></li>
+</ul>
+<p>R-CNN creates a region proposal for an image using Selective Search. Each created candidate region is wrapped in a fixed size by force and used as an input to the CNN. The feature map from the CNN is classified through SVM and the bounding-box is adjusted through Regressor. It has the disadvantage that it requires a large amount of storage space and is slow, since the image must be transformed or lost by wrapping and the CNN must be rotated as many times as the number of candidate regions.</p>
+</div>
+<div class="section" id="fast-r-cnn">
+<h3>1.3.2. Fast R-CNN<a class="headerlink" href="#fast-r-cnn" title="Permalink to this headline">¶</a></h3>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img09.png?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-9 Fast R-CNN structure (Source: Girshick. ICCV 2015. Fast R-CNN)</p></li>
+</ul>
+<p>Unlike R-CNNs, which apply a CNN to each candidate region, in a Fast R-CNN structure, a candidate region is created from the feature map generated by applying a CNN to the entire image. The generated candidate region is extracted as a fixed size feature vector through RoI pooling. After passing through the FC layer on the feature vector, classify it through Softmax, and adjust the bounding-box through Regressor.</p>
+</div>
+<div class="section" id="faster-r-cnn">
+<h3>1.3.3. Faster R-CNN<a class="headerlink" href="#faster-r-cnn" title="Permalink to this headline">¶</a></h3>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img10.png?raw=true" /> <img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img10-2.png?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-10 Faster R-CNN Structure (Source: Ren et al. 2016. Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks)</p></li>
+</ul>
+<p>Faster R-CNNs use a Region Proposal Network (RPN), which uses deep learning in place of the Selective Search step. RPNs predict the candidate region with an anchor-box at each point taken by the sliding-window when calculating the CNN in the feature map. The anchor box is a bounding box with several preset ratios and sizes. The candidate regions obtained from the RPN are sorted in the order of IoU, and the final candidate regions are selected through the Non-Maximum Suppression (NMS) algorithm. To fix the size of the selected candidate region, RoI pooling is performed, and then the process proceeds in the same manner as a Fast R-CNN.</p>
+</div>
+<div class="section" id="yolo">
+<h3>1.3.4. YOLO<a class="headerlink" href="#yolo" title="Permalink to this headline">¶</a></h3>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img11.png?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-11 YOLO structure (Source: Redmon et al. 2016. You Only Look Once: Unified, Real-Time Object Detection)</p></li>
+</ul>
+<p>Treating the bounding-box and class probability as a single problem, the YOLO structure predicts the class and location of an object at the same time. In order to use it, we divide the image into grids of a certain size to predict the bounding box for each grid. We will train the model with the confidence score values for the bounding boxes and the class score values for the grid cells. It is a very fast and simple process, but it is relatively inaccurate for small objects.</p>
+</div>
+<div class="section" id="ssd">
+<h3>1.3.5. SSD<a class="headerlink" href="#ssd" title="Permalink to this headline">¶</a></h3>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img12.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-12 SSD structure (Source: Liu et al. 2016. SSD: Single Shot MultiBox Detector)</p></li>
+</ul>
+<p>The SSD calculates the bounding box’s class score and offset (position coordinates) for each feature map that appears after each Convolutional Layer. The final bounding box is determined through the NMS algorithm. This has the advantage of being able to detect both small and large objects, since each feature map has a different scale.</p>
+</div>
+<div class="section" id="retinanet">
+<h3>1.3.6. RetinaNet<a class="headerlink" href="#retinanet" title="Permalink to this headline">¶</a></h3>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img13.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 1-13 Focal Loss (Source: Lin et al. 2018. Focal Loss for Dense Object Detection)</p></li>
+</ul>
+<p>RetinaNet improves upon the low performance of existing One-Stage Detectors by changing the loss function calculated during model training. One-Stage Detector trains itself by suggesting up to 100,000 candidates during the training phase. Most of them are classified as background classes and only 10 or less candidates are actually detecting the objects of interest. By reducing the loss value for relatively easy to classify background candidates, the weights of the loss of real objects that are difficult to classify are increased. Accordingly, we focus on training about objects of interest. RetinaNet is fast and performs similarly to a two-stage detector.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters\en\object-detection"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Building Face Mask Detection Model</a>
+    <a class='right-next' id="next-link" href="Ch2-EDA.html" title="next page">2. EDA</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

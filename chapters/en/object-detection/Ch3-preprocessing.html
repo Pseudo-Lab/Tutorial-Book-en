@@ -1,0 +1,1031 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Data Preprocessing &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Pseudo-Lab/Tutorial-Book-en");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="4. RetinaNet" href="Ch4-RetinaNet.html" />
+    <link rel="prev" title="2. EDA" href="Ch2-EDA.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../index.html">
+   Deep Learning Tutorials with PyTorch
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Object Detection
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Detecting Medical Masks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch1-Object-Detection.html">
+   1. Introduction to Object Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch2-EDA.html">
+   2. EDA
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   3. Data Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch4-RetinaNet.html">
+   4. RetinaNet
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch5-Faster-R-CNN.html">
+   5. Faster R-CNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   6. References
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Time Series
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
+   Predicting Confirmed Cases of Covid-19
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
+   1. Introduction to Time Series
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
+   2. EDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
+   3. Data Pre-Processing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
+   5. CNN-LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/References.html">
+   6. References
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/chapters/en/object-detection/Ch3-preprocessing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book-en"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book-en/issues/new?title=Issue%20on%20page%20%2Fchapters/en/object-detection/Ch3-preprocessing.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book-en/master?urlpath=tree/book/chapters/en/object-detection/Ch3-preprocessing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#augmentation-practice">
+   3.1. Augmentation Practice
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#torchvision-transforms">
+     3.1.1. Torchvision Transforms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#albumentations">
+     3.1.2. Albumentations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#probability-based-augmentation-combination">
+     3.1.3. Probability-Based Augmentation Combination
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bounding-box-augmentation">
+   3.2. Bounding Box Augmentation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-separation">
+   3.3. Data Separation
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="data-preprocessing">
+<h1>3. Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book-en/blob/master/book/chapters/en/object-detection/Ch3-preprocessing.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>In chapter 2, we explored the data in the Face Mask Detection dataset. In this chapter, we will perform data preprocessing.</p>
+<p>Popular datasets have tens of thousands of images, but many datasets are created on a much smaller scale, raising the question of how to train a limited dataset.</p>
+<p>You don’t have to find new images just because your dataset is limited. Instead, various images can be obtained using data augmentation.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch3img01.jpeg?raw=true" /></p>
+<ul class="simple">
+<li><p>Figure 3-1 Looks the same but is a different tennis ball (Source: <a class="reference external" href="https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/">https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/</a> )</p></li>
+</ul>
+<p>Figure 3-1 shows tennis balls that look identical to human eyes. However, the deep learning model sees all three tennis balls differently. With this principle, we can extract multiple data by modulating a single image.</p>
+<p>In chapter 3.1, we will look at the <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code> and <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> modules used for image augmentation. <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code> is a module officially provided by PyTorch, and <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> is an optimized open source computer vision library, similar to <code class="docutils literal notranslate"><span class="pre">OpenCV</span></code>. It is a module that provides faster processing speed, along with other features.</p>
+<p>Both modules can be used for augmentation when building an image classification model. However, the image augmentation function for building an object detection model is provided only by <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> . Image augmentation for object detection should transform not only the image but also the bounding box, which is a function that <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code> does not provide.</p>
+<p>Therefore, in chapter 3.2, we will practice bounding box augmentation using <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> . Finally, in chapter 3.3, we will separate the data into training data and test data.</p>
+<div class="section" id="augmentation-practice">
+<h2>3.1. Augmentation Practice<a class="headerlink" href="#augmentation-practice" title="Permalink to this headline">¶</a></h2>
+<p>For the augmentation practice, we will load the data using the code from chapter 2.1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
+<span class="o">!</span>unzip -q Face<span class="se">\ </span>Mask<span class="se">\ </span>Detection.zip
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 12 (delta 1), reused 2 (delta 0), pack-reused 0
+Unpacking objects: 100% (12/12), done.
+Face Mask Detection.zip is done!
+</pre></div>
+</div>
+</div>
+</div>
+<p>Make sure to use the latest version of the <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> module by upgrading it if necessary. We can upgrade a specific module through the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install --upgrade albumentations
+</pre></div>
+</div>
+</div>
+</div>
+<p>To visualize the augmentation output, let’s use the bounding box schematic code from chapter 2.3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="k">def</span> <span class="nf">generate_box</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    
+    <span class="n">xmin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;xmin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">ymin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ymin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;xmax&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ymax&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">generate_label</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;with_mask&quot;</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;mask_weared_incorrect&quot;</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">generate_target</span><span class="p">(</span><span class="n">file</span><span class="p">):</span> 
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+        <span class="n">objects</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span>
+
+        <span class="n">num_objs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+
+        <span class="n">boxes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+            <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generate_box</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generate_label</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+        <span class="n">boxes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> 
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> 
+        
+        <span class="n">target</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">target</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">boxes</span>
+        <span class="n">target</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+        
+        <span class="k">return</span> <span class="n">target</span>
+
+<span class="k">def</span> <span class="nf">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
+    
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">])):</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">annotation</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+        
+        <span class="k">elif</span> <span class="n">annotation</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+            
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+            
+        <span class="k">else</span> <span class="p">:</span>
+        
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are some differences from the functions used in chapter 2. We can see that the <code class="docutils literal notranslate"><span class="pre">torch.as_tensor</span></code> function has been added to the <code class="docutils literal notranslate"><span class="pre">generate_target</span></code> function to prepare for the operation between tensors when training the deep learning model later.</p>
+<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">plot_image</span></code> function introduced in chapter 2 read images from a file path. Now, the <code class="docutils literal notranslate"><span class="pre">plot_image_from_output</span></code> function visualizes the image after it has been converted to <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> . In PyTorch, images are expressed as <code class="docutils literal notranslate"><span class="pre">[channels,</span> <span class="pre">height,</span> <span class="pre">width]</span></code> , whereas in <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> they are expressed as <code class="docutils literal notranslate"><span class="pre">[height,</span> <span class="pre">width,</span> <span class="pre">channels]</span></code> . Therefore, we must use the <code class="docutils literal notranslate"><span class="pre">permute</span></code> function to change the channel order expected by <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> .</p>
+<div class="section" id="torchvision-transforms">
+<h3>3.1.1. Torchvision Transforms<a class="headerlink" href="#torchvision-transforms" title="Permalink to this headline">¶</a></h3>
+<p>To practice <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>, let’s first define the <code class="docutils literal notranslate"><span class="pre">TorchvisionDataset</span></code> class. The <code class="docutils literal notranslate"><span class="pre">TorchvisionDataset</span></code> class loads the image through the <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> method and then proceeds with data augmentation. Augmentation is performed according to the rule stored in the <code class="docutils literal notranslate"><span class="pre">transform</span></code> parameter. To measure time, it uses the <code class="docutils literal notranslate"><span class="pre">time</span></code> function, and finally returns <code class="docutils literal notranslate"><span class="pre">image</span></code> , <code class="docutils literal notranslate"><span class="pre">label</span></code> , and <code class="docutils literal notranslate"><span class="pre">total_time</span></code> .</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">albumentations</span>
+<span class="kn">import</span> <span class="nn">albumentations.pytorch</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">class</span> <span class="nc">TorchvisionMaskDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">file_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;xml&#39;</span>
+        <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file_image</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="s1">&#39;test&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;test_annotations/&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;annotations/&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+        
+        <span class="n">target</span> <span class="o">=</span> <span class="n">generate_target</span><span class="p">(</span><span class="n">label_path</span><span class="p">)</span>
+        
+        <span class="n">start_t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+        <span class="n">total_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_t</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">total_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s practice image augmentation using the function provided in <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>. After setting the image size (300, 300), we will crop it to size 224. Then we’ll randomly change the image’s brightness, contrast, saturation, and hue. Finally, after  inverting the image horizontally, we will convert it to a tensor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torchvision_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)),</span> 
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ColorJitter</span><span class="p">(</span><span class="n">brightness</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+<span class="p">])</span>
+
+<span class="n">torchvision_dataset</span> <span class="o">=</span> <span class="n">TorchvisionMaskDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision_transform</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can resize the image through the <code class="docutils literal notranslate"><span class="pre">Resize</span></code> function, then we can crop the image through the <code class="docutils literal notranslate"><span class="pre">RandomCrop</span></code> function provided by transforms. The <code class="docutils literal notranslate"><span class="pre">ColorJitter</span></code> function randomly changes the brightness, contrast, saturation, and hue. The <code class="docutils literal notranslate"><span class="pre">RandomHorizontalFlip</span></code> performs a horizontal inversion with a defined probability of p. Let’s run the code below to compare the image before and after the change.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">only_totensor</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()])</span>
+
+<span class="n">torchvision_dataset_no_transform</span> <span class="o">=</span> <span class="n">TorchvisionMaskDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">only_totensor</span>
+<span class="p">)</span>
+
+<span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset_no_transform</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Before applying transforms&#39;</span><span class="p">)</span>
+<span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Before applying transforms
+</pre></div>
+</div>
+<img alt="../../../_images/Ch3-preprocessing_16_1.png" src="../../../_images/Ch3-preprocessing_16_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;After applying transforms&#39;</span><span class="p">)</span>
+<span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>After applying transforms
+</pre></div>
+</div>
+<img alt="../../../_images/Ch3-preprocessing_17_1.png" src="../../../_images/Ch3-preprocessing_17_1.png" />
+</div>
+</div>
+<p>We can see that the mentioned changes have been applied to the image. However, while the image itself has changed, the bounding box has not. We can see that the augmentation provided by <code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code> only affects the image value, not the location of the bounding box.</p>
+<p>For image classification, the label value is fixed even if the image changes. But for object detection, the label value will also change as the image changes. We’ll see how to solve this problem in chapter 3.2. First, however, we will continue to compare the torchvision and albumentations modules. We will calculate the time spent converting the image in <code class="docutils literal notranslate"><span class="pre">torchvision_dataset</span></code> and measure the time it will take to repeat it 100 times using the code below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+  <span class="n">sample</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">total_time</span> <span class="o">+=</span> <span class="n">transform_time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;torchvision time: </span><span class="si">{}</span><span class="s2"> ms&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_time</span><span class="o">*</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torchvision time: 10.138509273529053 ms
+</pre></div>
+</div>
+</div>
+</div>
+<p>It took about 10 to 12 ms to perform the image conversion 100 times. In the next section, we will check the augmentation speed of the <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> module.</p>
+</div>
+<div class="section" id="albumentations">
+<h3>3.1.2. Albumentations<a class="headerlink" href="#albumentations" title="Permalink to this headline">¶</a></h3>
+<p>In chapter 3.1.1, we measured the conversion speed of <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>. In this section, we will look at another augmentation module, <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>. Like we did for <code class="docutils literal notranslate"><span class="pre">torchvision</span></code>, let’s first define the dataset class. <code class="docutils literal notranslate"><span class="pre">AlbumentationDataset</span></code> has a similar structure to <code class="docutils literal notranslate"><span class="pre">TorchVisionDataset</span></code>. It reads the image using the <code class="docutils literal notranslate"><span class="pre">cv2</span></code> module and converts it to RGB. After converting the image, the result is returned.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AlbumentationsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">file_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;xml&#39;</span>
+        <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file_image</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;test&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;test_annotations/&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;annotations/&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        
+        <span class="c1"># Read an image with OpenCV</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="n">generate_target</span><span class="p">(</span><span class="n">label_path</span><span class="p">)</span>
+
+        <span class="n">start_t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">:</span>
+            <span class="n">augmented</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+            <span class="n">total_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_t</span><span class="p">)</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">augmented</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+        
+            
+        <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">total_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a speed comparison with <code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code>, let’s use the same functions:  <code class="docutils literal notranslate"><span class="pre">Resize</span></code>, <code class="docutils literal notranslate"><span class="pre">RandomCrop</span></code>, <code class="docutils literal notranslate"><span class="pre">ColorJitter</span></code>, and <code class="docutils literal notranslate"><span class="pre">HorizontalFlip</span></code>. Then we will compare the images before and after the change.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Same transform with torchvision_transform</span>
+<span class="n">albumentations_transform</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> 
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">ColorJitter</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> 
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">HorizontalFlip</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> 
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Before applying transforms</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset_no_transform</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/Ch3-preprocessing_25_0.png" src="../../../_images/Ch3-preprocessing_25_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After applying transforms</span>
+<span class="n">albumentation_dataset</span> <span class="o">=</span> <span class="n">AlbumentationsDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">albumentations_transform</span>
+<span class="p">)</span>
+
+<span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">albumentation_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/Ch3-preprocessing_26_0.png" src="../../../_images/Ch3-preprocessing_26_0.png" />
+</div>
+</div>
+<p>Like <code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code>, the image has been transformed, but the bounding box has not changed. To measure the speed, we will apply <code class="docutils literal notranslate"><span class="pre">albumentation</span></code> 100 times.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">sample</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">albumentation_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">total_time</span> <span class="o">+=</span> <span class="n">transform_time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;albumentations time/sample: </span><span class="si">{}</span><span class="s2"> ms&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_time</span><span class="o">*</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>albumentations time/sample: 2.1135759353637695 ms
+</pre></div>
+</div>
+</div>
+</div>
+<p>It took about 2.0 to 2.5 ms to perform the image conversion 100 times. Compared to <code>torchvision.transforms</code>, it is about 4 times faster.</p>
+</div>
+<div class="section" id="probability-based-augmentation-combination">
+<h3>3.1.3. Probability-Based Augmentation Combination<a class="headerlink" href="#probability-based-augmentation-combination" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Albmentations</span></code> is not only faster than <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>, but also provides a new function. In this section, we will look at the <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> function provided by Albumentations. This function retrieves the augmentation functions in the list based on a given probability value. The probability value of the list and of the corresponding function are considered together to decide whether or not to execute. The <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> functions below each have a probability of being selected. Since the 3 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> functions inside each function are also given a probability value of 1, we can see that one of the 3 functions is selected and executed with an actual probability of 1/3. There are various possible augmentations that can be created by adjusting the probability value in this way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">albumentations_transform_oneof</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> 
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">OneOf</span><span class="p">([</span>
+                          <span class="n">albumentations</span><span class="o">.</span><span class="n">HorizontalFlip</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                          <span class="n">albumentations</span><span class="o">.</span><span class="n">RandomRotate90</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                          <span class="n">albumentations</span><span class="o">.</span><span class="n">VerticalFlip</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>            
+    <span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">OneOf</span><span class="p">([</span>
+                          <span class="n">albumentations</span><span class="o">.</span><span class="n">MotionBlur</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                          <span class="n">albumentations</span><span class="o">.</span><span class="n">OpticalDistortion</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                          <span class="n">albumentations</span><span class="o">.</span><span class="n">GaussNoise</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                 
+    <span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">albumentations</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below is the result of applying <code>albumentations_transform_oneof</code> to an image 10 times.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">albumentation_dataset_oneof</span> <span class="o">=</span> <span class="n">AlbumentationsDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">albumentations_transform_oneof</span>
+<span class="p">)</span>
+
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
+  <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">albumentation_dataset_oneof</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+  <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/Ch3-preprocessing_33_0.png" src="../../../_images/Ch3-preprocessing_33_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bounding-box-augmentation">
+<h2>3.2. Bounding Box Augmentation<a class="headerlink" href="#bounding-box-augmentation" title="Permalink to this headline">¶</a></h2>
+<p>When performing augmentation on the image used to build the object detection model, the bounding box conversion must be carried out along with the image conversion. As we saw in chapter 3.1, if the bounding box is not converted together, the model training will not work properly because the bounding box is detecting the wrong place. Bounding box augmentation is possible by using the <code class="docutils literal notranslate"><span class="pre">bbox_params</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">Compose</span></code> function provided by <code class="docutils literal notranslate"><span class="pre">Albumentations</span></code>.</p>
+<p>First, let’s create a new dataset class using the code below. The transform part of the <code class="docutils literal notranslate"><span class="pre">AlbumentationsDataset</span></code> class in section 3.1.2 has been modified. Not only the image but also the bounding box is being transformed, so the necessary input and output values are modified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BboxAugmentationDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">file_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">file_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;xml&#39;</span>
+        <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file_image</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;test&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;test_annotations/&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;annotations/&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="p">)</span>
+        
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="n">generate_target</span><span class="p">(</span><span class="n">label_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">:</span>
+            <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">,</span> <span class="n">bboxes</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="s1">&#39;boxes&#39;</span><span class="p">],</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">])</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">transformed</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;boxes&#39;</span><span class="p">:</span><span class="n">transformed</span><span class="p">[</span><span class="s1">&#39;bboxes&#39;</span><span class="p">],</span> <span class="s1">&#39;labels&#39;</span><span class="p">:</span><span class="n">transformed</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]}</span>
+        
+            
+        <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s use the <code class="docutils literal notranslate"><span class="pre">albumentations.Compose</span></code> function to define the transformation. The first thing we will do is perform a horizontal flip, then we will rotate between -90 and 90 degrees. Enter the <code class="docutils literal notranslate"><span class="pre">albumentations.BboxParams</span></code> object into the bbox_params parameter in order to convert the bounding box as well. In the Face Mask Detection dataset, the bounding box notation is <code class="docutils literal notranslate"><span class="pre">xmin</span></code> , <code class="docutils literal notranslate"><span class="pre">ymin</span></code> , <code class="docutils literal notranslate"><span class="pre">xmax</span></code> , <code class="docutils literal notranslate"><span class="pre">ymax</span></code> , which is the same as pascal_voc notation. Therefore, enter pascal_voc in the format parameter. Also, enter <code class="docutils literal notranslate"><span class="pre">labels</span></code> in <code class="docutils literal notranslate"><span class="pre">label_field</span></code> to store the class values for each object in the <code class="docutils literal notranslate"><span class="pre">labels</span></code> parameter when <code class="docutils literal notranslate"><span class="pre">transform</span></code> is performed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">albumentations</span><span class="o">.</span><span class="n">HorizontalFlip</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+     <span class="n">albumentations</span><span class="o">.</span><span class="n">Rotate</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+     <span class="n">albumentations</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()],</span>
+    <span class="n">bbox_params</span><span class="o">=</span><span class="n">albumentations</span><span class="o">.</span><span class="n">BboxParams</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;pascal_voc&#39;</span><span class="p">,</span> <span class="n">label_fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s activate the <code class="docutils literal notranslate"><span class="pre">BboxAugmentationDataset</span></code> class and check the augmentation result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform_dataset</span> <span class="o">=</span> <span class="n">BboxAugmentationDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">bbox_transform</span>
+<span class="p">)</span>
+
+<span class="n">img</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="n">bbox_transform_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/Ch3-preprocessing_39_0.png" src="../../../_images/Ch3-preprocessing_39_0.png" />
+</div>
+</div>
+<p>Whenever we run the code above, the image is converted and output. In addition to that, the bounding box is also properly transformed so we can see that it accurately detects masked faces in the transformed image. We will build a model in chapters 4 and 5 using the data created by converting the image and bounding box together.</p>
+</div>
+<div class="section" id="data-separation">
+<h2>3.3. Data Separation<a class="headerlink" href="#data-separation" title="Permalink to this headline">¶</a></h2>
+<p>To build an Artificial Intelligence model, we need training data and test data. The training data is used when training the model, and the test data is used when evaluating the model. Test data must not overlap with training data. Let’s divide the data imported in chapter 3.1 into training data and test data. First, let’s check the total number of data with the code below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>853
+853
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that there are a total of 853 images. Usually, the ratio of training data to test data is 7:3. This data has a small total compared to more comprehensive datasets, so let’s take an 8:2 ratio. In order to use 170 of the 853 data as test data, we will move the data to a separate folder. First, create a folder to contain test data using the Linux command <code>mkdir</code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>mkdir test_images
+<span class="o">!</span>mkdir test_annotations
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we run the code above, the test_images folder and test_annotations folder will be created. Now, we will move 170 files each from the images folder and annotations folder into the newly created folders. We will use the <code>sample</code> function in the <code>random</code> module to randomly extract numbers and use them as index values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">853</span><span class="p">),</span> <span class="mi">170</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>170
+[796, 451, 119, 7, 92, 826, 596, 35, 687, 709]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))[</span><span class="n">idx</span><span class="p">]:</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s1">&#39;images/&#39;</span><span class="o">+</span><span class="n">img</span><span class="p">,</span> <span class="s1">&#39;test_images/&#39;</span><span class="o">+</span><span class="n">img</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">annot</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))[</span><span class="n">idx</span><span class="p">]:</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s1">&#39;annotations/&#39;</span><span class="o">+</span><span class="n">annot</span><span class="p">,</span> <span class="s1">&#39;test_annotations/&#39;</span><span class="o">+</span><span class="n">annot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As seen in the code above, we can use the <code>shutil</code> package to move 170 images and 170 annotation files to the test_images folder and test_annotations folder, respectively. Let’s check the number of files in each folder.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;test_annotations&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;test_images&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>683
+683
+170
+170
+</pre></div>
+</div>
+</div>
+</div>
+<p>For image classification, you only need to check the number of images after dividing the dataset. But for object detection, it is necessary to check how many objects for each class exist in the dataset. Let’s use the code below to check the number of objects by class in the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">get_num_objects_for_each_class</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+
+    <span class="n">total_labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">img</span><span class="p">,</span> <span class="n">annot</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">leave</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="n">total_labels</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">annot</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">total_labels</span><span class="p">)</span>
+
+
+<span class="n">train_data</span> <span class="o">=</span>  <span class="n">BboxAugmentationDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span>
+<span class="p">)</span>
+
+<span class="n">test_data</span> <span class="o">=</span>  <span class="n">BboxAugmentationDataset</span><span class="p">(</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;test_images/&#39;</span>
+<span class="p">)</span>
+
+<span class="n">train_objects</span> <span class="o">=</span> <span class="n">get_num_objects_for_each_class</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+<span class="n">test_objects</span> <span class="o">=</span> <span class="n">get_num_objects_for_each_class</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Object in training data&#39;</span><span class="p">,</span> <span class="n">train_objects</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Object in test data&#39;</span><span class="p">,</span> <span class="n">test_objects</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 683/683 [00:13&lt;00:00, 51.22it/s]
+100%|██████████| 170/170 [00:03&lt;00:00, 52.67it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Object in training data Counter({1: 2691, 0: 532, 2: 97})
+
+Object in test data Counter({1: 541, 0: 185, 2: 26})
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ㅤ
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">get_num_objects_for_each_class</span></code> is a function that stores the label values of all bounding boxes in the dataset in <code class="docutils literal notranslate"><span class="pre">total_labels</span></code> and then uses the <code class="docutils literal notranslate"><span class="pre">Counter</span></code> class to count and return the number of each label. In the training data, there are 532 objects in class 0, 2,691 objects in class 1, and 97 objects in class 2. In the test data, there are 185 objects in class 0, 541 objects in class 1, and 26 objects in class 2. We can confirm that the data is divided appropriately by seeing that the ratio of 0,1,2 is similar for each dataset.</p>
+<p>So far, we have seen how to use the <code>Albumentations</code> module to inflate the number of images used to build an object detection model, and we have seen how to separate the owned data into training data and test data. In chapter 4, we will build a mask wearing detection model by training RetinaNet, a one-stage model.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters\en\object-detection"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Ch2-EDA.html" title="previous page">2. EDA</a>
+    <a class='right-next' id="next-link" href="Ch4-RetinaNet.html" title="next page">4. RetinaNet</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
