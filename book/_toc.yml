@@ -2,17 +2,17 @@
 
 - file: index
     
-# - part: 객체 탐지(Object Detection)
-  # chapters:
-  # - file: chapters/object-detection/intro
-    # title: 의료용 마스크 탐지 모델 구축
+- part: Object Detection
+  chapters:
+  - file: chapters/en/object-detection/intro
+    title: Detecting Medical Masks
   # sections:
-  # - file: chapters/object-detection/Ch1-Object-Detection
-  # - file: chapters/object-detection/Ch2-EDA
-  # - file: chapters/object-detection/Ch3-preprocessing
-  # - file: chapters/object-detection/Ch4-RetinaNet
-  # - file: chapters/object-detection/Ch5-Faster-R-CNN
-  # - file: chapters/object-detection/References
+  - file: chapters/en/object-detection/Ch1-Object-Detection
+  - file: chapters/en/object-detection/Ch2-EDA
+  - file: chapters/en/object-detection/Ch3-preprocessing
+  - file: chapters/en/object-detection/Ch4-RetinaNet
+  - file: chapters/en/object-detection/Ch5-Faster-R-CNN
+  - file: chapters/en/object-detection/References
     
 - part: Time Series
   chapters:

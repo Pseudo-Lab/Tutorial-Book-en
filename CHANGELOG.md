@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+#### Release: Tutorial-Book-en 0.2.0 | Release Date: Mar. 26, 2021 (ADD OD TRANSLATION)
+
+- add object detection tutorial translation 
+  <br/><br/><br/>
+
 #### Release: Tutorial-Book-en 0.1.1 | Release Date: Mar. 8, 2021 (EDIT LANDING PAGE AND TS)
 
 - fix typo on Lindsay
